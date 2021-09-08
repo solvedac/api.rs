@@ -1,0 +1,5 @@
+inputSpec: "unofficial-documentation/src/openapi.yaml"
+generatorName: "rust"
+outputDir: "generated"
+validateSpec: false
+generateAliasAsModel: true
