@@ -17,15 +17,12 @@ pub struct Schema1 {
     /// 사이트 디자인 테마입니다.
     #[serde(rename = "screenTheme", skip_serializing_if = "Option::is_none")]
     pub screen_theme: Option<ScreenTheme>,
-    /// 태그 이름을 나타낼 때 사용할 언어입니다.
     #[serde(rename = "tagDisplayLanguage", skip_serializing_if = "Option::is_none")]
-    pub tag_display_language: Option<Box<crate::models::Schema9>>,
-    /// 해결한 문제의 난이도 아이콘입니다.
+    pub tag_display_language: Option<Box<crate::models::Schema10>>,
     #[serde(rename = "iconSchemeSolved", skip_serializing_if = "Option::is_none")]
-    pub icon_scheme_solved: Option<Box<crate::models::Schema8>>,
-    /// 해결하지 못한 문제의 난이도 아이콘입니다.
+    pub icon_scheme_solved: Option<Box<crate::models::Schema9>>,
     #[serde(rename = "iconSchemeNotSolved", skip_serializing_if = "Option::is_none")]
-    pub icon_scheme_not_solved: Option<Box<crate::models::Schema8>>,
+    pub icon_scheme_not_solved: Option<Box<crate::models::Schema9>>,
     /// 문제 목록의 기본 정렬 순서입니다.
     #[serde(rename = "problemSortBy", skip_serializing_if = "Option::is_none")]
     pub problem_sort_by: Option<ProblemSortBy>,
