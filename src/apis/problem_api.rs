@@ -31,7 +31,7 @@ pub enum GetProblemLevelError {
 
 
 /// 해당하는 ID의 문제를 가져옵니다.
-pub async fn get_problem_by_id(configuration: &configuration::Configuration, problem_id: i64) -> Result<crate::models::Schema, Error<GetProblemByIdError>> {
+pub async fn get_problem_by_id(configuration: &configuration::Configuration, problem_id: i64) -> Result<crate::models::TaggedProblem, Error<GetProblemByIdError>> {
 
     let local_var_client = &configuration.client;
 

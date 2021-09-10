@@ -36,8 +36,6 @@ pub mod ranked_user;
 pub use self::ranked_user::RankedUser;
 pub mod ranked_user_all_of;
 pub use self::ranked_user_all_of::RankedUserAllOf;
-pub mod schema;
-pub use self::schema::Schema;
 pub mod settings;
 pub use self::settings::Settings;
 pub mod solved_ac_statistics;
