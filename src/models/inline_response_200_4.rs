@@ -18,7 +18,7 @@ pub struct InlineResponse2004 {
     pub count: Option<i64>,
     /// 찾은 태그 목록입니다.
     #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
-    pub items: Option<Vec<crate::models::Schema5>>,
+    pub items: Option<Vec<crate::models::ProblemTag>>,
 }
 
 impl InlineResponse2004 {

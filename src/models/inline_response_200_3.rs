@@ -17,19 +17,19 @@ pub struct InlineResponse2003 {
     pub autocomplete: Option<Vec<crate::models::InlineResponse2003Autocomplete>>,
     /// 찾은 문제 목록입니다.
     #[serde(rename = "problems", skip_serializing_if = "Option::is_none")]
-    pub problems: Option<Vec<crate::models::Schema4>>,
+    pub problems: Option<Vec<crate::models::Problem>>,
     /// 찾은 문제 수입니다.
     #[serde(rename = "problemCount", skip_serializing_if = "Option::is_none")]
     pub problem_count: Option<i64>,
     /// 찾은 사용자 목록입니다.
     #[serde(rename = "users", skip_serializing_if = "Option::is_none")]
-    pub users: Option<Vec<crate::models::Schema>>,
+    pub users: Option<Vec<crate::models::User>>,
     /// 찾은 사용자 수입니다.
     #[serde(rename = "userCount", skip_serializing_if = "Option::is_none")]
     pub user_count: Option<i64>,
     /// 찾은 태그 목록입니다.
     #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
-    pub tags: Option<Vec<crate::models::Schema5>>,
+    pub tags: Option<Vec<crate::models::ProblemTag>>,
     /// 찾은 태그 수입니다.
     #[serde(rename = "tagCount", skip_serializing_if = "Option::is_none")]
     pub tag_count: Option<i64>,

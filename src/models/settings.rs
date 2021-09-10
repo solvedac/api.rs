@@ -18,11 +18,11 @@ pub struct Settings {
     #[serde(rename = "screenTheme", skip_serializing_if = "Option::is_none")]
     pub screen_theme: Option<ScreenTheme>,
     #[serde(rename = "tagDisplayLanguage", skip_serializing_if = "Option::is_none")]
-    pub tag_display_language: Option<Box<crate::models::Schema10>>,
+    pub tag_display_language: Option<Box<crate::models::Language>>,
     #[serde(rename = "iconSchemeSolved", skip_serializing_if = "Option::is_none")]
-    pub icon_scheme_solved: Option<Box<crate::models::Schema9>>,
+    pub icon_scheme_solved: Option<Box<crate::models::IconScheme>>,
     #[serde(rename = "iconSchemeNotSolved", skip_serializing_if = "Option::is_none")]
-    pub icon_scheme_not_solved: Option<Box<crate::models::Schema9>>,
+    pub icon_scheme_not_solved: Option<Box<crate::models::IconScheme>>,
     /// 문제 목록의 기본 정렬 순서입니다.
     #[serde(rename = "problemSortBy", skip_serializing_if = "Option::is_none")]
     pub problem_sort_by: Option<ProblemSortBy>,
