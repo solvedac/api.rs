@@ -43,7 +43,7 @@ pub struct TaggedProblem {
     pub average_tries: Option<f32>,
     /// 태그 목록입니다.
     #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
-    pub tags: Option<Vec<crate::models::Schema5>>,
+    pub tags: Option<Vec<crate::models::ProblemTag>>,
 }
 
 impl TaggedProblem {

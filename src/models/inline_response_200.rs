@@ -15,7 +15,7 @@
 pub struct InlineResponse200 {
     /// 계정의 사용자 정보입니다.
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
-    pub user: Option<Box<crate::models::Schema>>,
+    pub user: Option<Box<crate::models::User>>,
 }
 
 impl InlineResponse200 {

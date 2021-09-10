@@ -22,9 +22,9 @@ pub struct RankedUser {
     pub bio: String,
     /// 사용자가 속한 조직 목록입니다.
     #[serde(rename = "organizations")]
-    pub organizations: Vec<crate::models::Schema12>,
+    pub organizations: Vec<crate::models::Organization>,
     #[serde(rename = "badge", skip_serializing_if = "Option::is_none")]
-    pub badge: Option<Box<crate::models::Schema8>>,
+    pub badge: Option<Box<crate::models::Badge>>,
     #[serde(rename = "background")]
     pub background: Box<crate::models::UserBackground>,
     /// 사용자의 프로필 사진으로 가는 하이퍼링크입니다.
@@ -79,7 +79,7 @@ pub struct RankedUser {
 
 impl RankedUser {
     /// 사용자 정보입니다. 
-    pub fn new(handle: String, bio: String, organizations: Vec<crate::models::Schema12>, background: crate::models::UserBackground, profile_image_url: Option<String>, solved_count: i64, vote_count: i64, exp: i64, tier: i64, rating: i64, rating_by_problems_sum: i64, rating_by_class: i64, rating_by_solved_count: i64, rating_by_vote_count: i64, class: i64, class_decoration: ClassDecoration, rival_count: i64, reverse_rival_count: i64, max_streak: i64) -> RankedUser {
+    pub fn new(handle: String, bio: String, organizations: Vec<crate::models::Organization>, background: crate::models::UserBackground, profile_image_url: Option<String>, solved_count: i64, vote_count: i64, exp: i64, tier: i64, rating: i64, rating_by_problems_sum: i64, rating_by_class: i64, rating_by_solved_count: i64, rating_by_vote_count: i64, class: i64, class_decoration: ClassDecoration, rival_count: i64, reverse_rival_count: i64, max_streak: i64) -> RankedUser {
         RankedUser {
             handle,
             bio,

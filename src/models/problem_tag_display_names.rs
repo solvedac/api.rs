@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ProblemTagDisplayNames {
     #[serde(rename = "language", skip_serializing_if = "Option::is_none")]
-    pub language: Option<crate::models::Schema10>,
+    pub language: Option<crate::models::Language>,
     /// 태그의 이름입니다.
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,

@@ -18,7 +18,7 @@ pub struct InlineResponse2002 {
     pub count: Option<i64>,
     /// 찾은 문제 목록입니다.
     #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
-    pub items: Option<Vec<crate::models::Schema4>>,
+    pub items: Option<Vec<crate::models::Problem>>,
 }
 
 impl InlineResponse2002 {

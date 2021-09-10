@@ -12,7 +12,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Schema7 {
+pub struct SolvedAcStatistics {
     /// 여태까지 색인된 백준 문제 수입니다.
     #[serde(rename = "problemCount", skip_serializing_if = "Option::is_none")]
     pub problem_count: Option<i64>,
@@ -30,9 +30,9 @@ pub struct Schema7 {
     pub contribution_count: Option<i64>,
 }
 
-impl Schema7 {
-    pub fn new() -> Schema7 {
-        Schema7 {
+impl SolvedAcStatistics {
+    pub fn new() -> SolvedAcStatistics {
+        SolvedAcStatistics {
             problem_count: None,
             problem_voted_count: None,
             user_count: None,

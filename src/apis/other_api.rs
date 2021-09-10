@@ -24,7 +24,7 @@ pub enum GetSiteStatsError {
 
 
 /// solved.ac 통계를 가져옵니다.
-pub async fn get_site_stats(configuration: &configuration::Configuration, ) -> Result<crate::models::Schema7, Error<GetSiteStatsError>> {
+pub async fn get_site_stats(configuration: &configuration::Configuration, ) -> Result<crate::models::SolvedAcStatistics, Error<GetSiteStatsError>> {
 
     let local_var_client = &configuration.client;
 

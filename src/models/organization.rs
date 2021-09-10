@@ -12,7 +12,7 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Schema12 {
+pub struct Organization {
     /// 조직의 ID입니다.
     #[serde(rename = "organizationId", skip_serializing_if = "Option::is_none")]
     pub organization_id: Option<i64>,
@@ -39,9 +39,9 @@ pub struct Schema12 {
     pub color: Option<String>,
 }
 
-impl Schema12 {
-    pub fn new() -> Schema12 {
-        Schema12 {
+impl Organization {
+    pub fn new() -> Organization {
+        Organization {
             organization_id: None,
             name: None,
             _type: None,
