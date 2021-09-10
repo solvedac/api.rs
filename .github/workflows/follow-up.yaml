@@ -16,7 +16,7 @@ jobs:
           distribution: adopt
           java-version: 11
       - uses: actions/setup-node@v2
-      - name: Override OpenAPI Version to 3.0.x (generator doe snot support 3.1)
+      - name: Override OpenAPI Version to 3.0.x (generator does not support 3.1)
         run: |
           for file in `find unofficial-documentation/src -type f`; do
             sed -i 's/openapi: "3.1.0"/openapi: "3.0.0"/' $file
@@ -28,7 +28,8 @@ jobs:
           sed -ri ":a;N;\$!ba;s/\"solvedac_api\"\nversion = \"[^\"]+\"/\"solvedac_api\"\nversion = \"`sed -rn 's/^.*  version: "([^"]+)".*$/\1/p' unofficial-documentation/src/openapi.yaml | sed -rn 's/\.0+([0-9]+)/.\1/p'`\"/" Cargo.toml
       - name: Move Generated Files
         run: |
-          mv generated/src src;
+          rm -rf src;
+          mv generated/src -t .;
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
