@@ -1,5 +1,9 @@
 pub mod badge;
 pub use self::badge::Badge;
+pub mod full_user;
+pub use self::full_user::FullUser;
+pub mod full_user_all_of;
+pub use self::full_user_all_of::FullUserAllOf;
 pub mod icon_scheme;
 pub use self::icon_scheme::IconScheme;
 pub mod inline_object;
