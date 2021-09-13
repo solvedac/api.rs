@@ -1,5 +1,7 @@
 pub mod badge;
 pub use self::badge::Badge;
+pub mod class_decoration;
+pub use self::class_decoration::ClassDecoration;
 pub mod full_user;
 pub use self::full_user::FullUser;
 pub mod full_user_all_of;
