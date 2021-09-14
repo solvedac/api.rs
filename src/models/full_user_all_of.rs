@@ -13,6 +13,9 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FullUserAllOf {
+    /// 사용자의 순위입니다.
+    #[serde(rename = "rank", skip_serializing_if = "Option::is_none")]
+    pub rank: Option<i64>,
     /// 라이벌 여부입니다.
     #[serde(rename = "isRival", skip_serializing_if = "Option::is_none")]
     pub is_rival: Option<bool>,
@@ -24,6 +27,7 @@ pub struct FullUserAllOf {
 impl FullUserAllOf {
     pub fn new() -> FullUserAllOf {
         FullUserAllOf {
+            rank: None,
             is_rival: None,
             is_reverse_rival: None,
         }
