@@ -12,20 +12,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineResponse2003Autocomplete {
-    /// 자동완성 제목입니다. 해당 값으로 자동완성됩니다.
-    #[serde(rename = "caption", skip_serializing_if = "Option::is_none")]
-    pub caption: Option<String>,
-    /// 자동완성 요소에 대한 설명입니다.
-    #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
-    pub description: Option<String>,
+pub struct InlineResponse20013 {
+    /// 찾은 사용자 수입니다.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
+    pub count: Option<i64>,
+    /// 찾은 사용자 목록입니다.
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
+    pub items: Option<Vec<crate::models::RankedUser>>,
 }
 
-impl InlineResponse2003Autocomplete {
-    pub fn new() -> InlineResponse2003Autocomplete {
-        InlineResponse2003Autocomplete {
-            caption: None,
-            description: None,
+impl InlineResponse20013 {
+    pub fn new() -> InlineResponse20013 {
+        InlineResponse20013 {
+            count: None,
+            items: None,
         }
     }
 }

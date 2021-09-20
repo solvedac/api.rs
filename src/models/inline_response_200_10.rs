@@ -12,16 +12,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineObject {
-    /// 리딤 코드입니다.
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
+pub struct InlineResponse20010 {
+    /// 찾은 문제 수입니다.
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
+    pub count: Option<i64>,
+    /// 찾은 문제 목록입니다.
+    #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
+    pub items: Option<Vec<crate::models::Problem>>,
 }
 
-impl InlineObject {
-    pub fn new() -> InlineObject {
-        InlineObject {
-            code: None,
+impl InlineResponse20010 {
+    pub fn new() -> InlineResponse20010 {
+        InlineResponse20010 {
+            count: None,
+            items: None,
         }
     }
 }

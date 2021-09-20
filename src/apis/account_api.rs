@@ -15,6 +15,15 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
+/// struct for typed errors of method `redeem_code`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum RedeemCodeError {
+    Status403(),
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `update_account_settings`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -32,8 +41,36 @@ pub enum VerifyAccountCredentialsError {
 }
 
 
+/// 리딤 코드와 배지, 배경 등을 교환합니다.
+pub async fn redeem_code(configuration: &configuration::Configuration, inline_object: crate::models::InlineObject) -> Result<(), Error<RedeemCodeError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/account/redeem", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+    local_var_req_builder = local_var_req_builder.json(&inline_object);
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        Ok(())
+    } else {
+        let local_var_entity: Option<RedeemCodeError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 /// 계정의 설정을 변경합니다.
-pub async fn update_account_settings(configuration: &configuration::Configuration, inline_object: crate::models::InlineObject) -> Result<(), Error<UpdateAccountSettingsError>> {
+pub async fn update_account_settings(configuration: &configuration::Configuration, inline_object1: crate::models::InlineObject1) -> Result<(), Error<UpdateAccountSettingsError>> {
 
     let local_var_client = &configuration.client;
 
@@ -43,7 +80,7 @@ pub async fn update_account_settings(configuration: &configuration::Configuratio
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    local_var_req_builder = local_var_req_builder.json(&inline_object);
+    local_var_req_builder = local_var_req_builder.json(&inline_object1);
 
     let local_var_req = local_var_req_builder.build()?;
     let local_var_resp = local_var_client.execute(local_var_req).await?;

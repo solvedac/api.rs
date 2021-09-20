@@ -59,7 +59,7 @@ pub async fn get_user(configuration: &configuration::Configuration, handle: &str
 }
 
 /// 사용자가 푼 문제 개수를 문제 수준별로 가져옵니다.
-pub async fn get_user_problem_stats(configuration: &configuration::Configuration, handle: &str) -> Result<Vec<crate::models::InlineResponse2006>, Error<GetUserProblemStatsError>> {
+pub async fn get_user_problem_stats(configuration: &configuration::Configuration, handle: &str) -> Result<Vec<crate::models::InlineResponse20014>, Error<GetUserProblemStatsError>> {
 
     let local_var_client = &configuration.client;
 
