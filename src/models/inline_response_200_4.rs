@@ -13,12 +13,12 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InlineResponse2004 {
-    /// 찾은 태그 수입니다.
+    /// 순위가 배정된 사용자의 수입니다.
     #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
     pub count: Option<i64>,
-    /// 찾은 태그 목록입니다.
+    /// CLASS 순위로 정렬된 사용자 목록입니다.
     #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
-    pub items: Option<Vec<crate::models::ProblemTag>>,
+    pub items: Option<Vec<crate::models::User>>,
 }
 
 impl InlineResponse2004 {

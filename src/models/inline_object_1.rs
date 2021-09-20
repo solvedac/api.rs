@@ -12,16 +12,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineObject {
-    /// 리딤 코드입니다.
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
+pub struct InlineObject1 {
+    /// 업데이트할 설정의 이름입니다.
+    #[serde(rename = "key", skip_serializing_if = "Option::is_none")]
+    pub key: Option<String>,
+    /// 업데이트할 설정의 새로운 값입니다.
+    #[serde(rename = "value", skip_serializing_if = "Option::is_none")]
+    pub value: Option<serde_json::Value>,
 }
 
-impl InlineObject {
-    pub fn new() -> InlineObject {
-        InlineObject {
-            code: None,
+impl InlineObject1 {
+    pub fn new() -> InlineObject1 {
+        InlineObject1 {
+            key: None,
+            value: None,
         }
     }
 }

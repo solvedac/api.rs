@@ -12,16 +12,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineObject {
-    /// 리딤 코드입니다.
-    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
-    pub code: Option<String>,
+pub struct InlineResponse20011Autocomplete {
+    /// 자동완성 제목입니다. 해당 값으로 자동완성됩니다.
+    #[serde(rename = "caption", skip_serializing_if = "Option::is_none")]
+    pub caption: Option<String>,
+    /// 자동완성 요소에 대한 설명입니다.
+    #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
 }
 
-impl InlineObject {
-    pub fn new() -> InlineObject {
-        InlineObject {
-            code: None,
+impl InlineResponse20011Autocomplete {
+    pub fn new() -> InlineResponse20011Autocomplete {
+        InlineResponse20011Autocomplete {
+            caption: None,
+            description: None,
         }
     }
 }

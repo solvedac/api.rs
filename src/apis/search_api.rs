@@ -45,7 +45,7 @@ pub enum SearchUserError {
 
 
 /// 주어진 쿼리에 따라 검색해보고, 자동 완성에 적합하도록 가공한 정보를 돌려줍니다.
-pub async fn get_search_auto_completion(configuration: &configuration::Configuration, query: &str) -> Result<crate::models::InlineResponse2003, Error<GetSearchAutoCompletionError>> {
+pub async fn get_search_auto_completion(configuration: &configuration::Configuration, query: &str) -> Result<crate::models::InlineResponse20011, Error<GetSearchAutoCompletionError>> {
 
     let local_var_client = &configuration.client;
 
@@ -73,7 +73,7 @@ pub async fn get_search_auto_completion(configuration: &configuration::Configura
 }
 
 /// 주어진 쿼리에 따라 문제를 검색합니다.
-pub async fn search_problem(configuration: &configuration::Configuration, query: &str, page: Option<f32>, sort: Option<&str>, direction: Option<&str>) -> Result<crate::models::InlineResponse2002, Error<SearchProblemError>> {
+pub async fn search_problem(configuration: &configuration::Configuration, query: &str, page: Option<f32>, sort: Option<&str>, direction: Option<&str>) -> Result<crate::models::InlineResponse20010, Error<SearchProblemError>> {
 
     let local_var_client = &configuration.client;
 
@@ -110,7 +110,7 @@ pub async fn search_problem(configuration: &configuration::Configuration, query:
 }
 
 /// 주어진 쿼리에 따라 문제 태그를 검색합니다.
-pub async fn search_problem_tag(configuration: &configuration::Configuration, query: &str, page: Option<f32>) -> Result<crate::models::InlineResponse2004, Error<SearchProblemTagError>> {
+pub async fn search_problem_tag(configuration: &configuration::Configuration, query: &str, page: Option<f32>) -> Result<crate::models::InlineResponse20012, Error<SearchProblemTagError>> {
 
     let local_var_client = &configuration.client;
 
@@ -141,7 +141,7 @@ pub async fn search_problem_tag(configuration: &configuration::Configuration, qu
 }
 
 /// 주어진 쿼리에 따라 사용자를 검색합니다.
-pub async fn search_user(configuration: &configuration::Configuration, query: &str, page: Option<f32>) -> Result<crate::models::InlineResponse2005, Error<SearchUserError>> {
+pub async fn search_user(configuration: &configuration::Configuration, query: &str, page: Option<f32>) -> Result<crate::models::InlineResponse20013, Error<SearchUserError>> {
 
     let local_var_client = &configuration.client;
 
