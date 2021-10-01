@@ -29,6 +29,13 @@ pub enum GetProblemByIdError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method `get_problem_by_id_array`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetProblemByIdArrayError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `get_problem_level`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -87,6 +94,34 @@ pub async fn get_problem_by_id(configuration: &configuration::Configuration, pro
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<GetProblemByIdError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// 해당하는 ID의 문제 목록을 가져옵니다.
+pub async fn get_problem_by_id_array(configuration: &configuration::Configuration, problem_ids: i64) -> Result<Vec<crate::models::TaggedProblem>, Error<GetProblemByIdArrayError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/problem/lookup", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("problemIds", &problem_ids.to_string())]);
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetProblemByIdArrayError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
