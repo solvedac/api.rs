@@ -100,7 +100,7 @@ pub async fn get_problem_by_id(configuration: &configuration::Configuration, pro
 }
 
 /// 해당하는 ID의 문제 목록을 가져옵니다.
-pub async fn get_problem_by_id_array(configuration: &configuration::Configuration, problem_ids: i64) -> Result<Vec<crate::models::TaggedProblem>, Error<GetProblemByIdArrayError>> {
+pub async fn get_problem_by_id_array(configuration: &configuration::Configuration, problem_ids: &str) -> Result<Vec<crate::models::TaggedProblem>, Error<GetProblemByIdArrayError>> {
 
     let local_var_client = &configuration.client;
 
