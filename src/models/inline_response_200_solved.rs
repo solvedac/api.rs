@@ -12,20 +12,20 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineResponse200 {
-    /// 계정의 사용자 정보입니다.
-    #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
-    pub user: Option<Box<crate::models::User>>,
-    /// 해당 계정의 사용자가 푼 문제 정보입니다.
-    #[serde(rename = "solved", skip_serializing_if = "Option::is_none")]
-    pub solved: Option<Vec<crate::models::InlineResponse200Solved>>,
+pub struct InlineResponse200Solved {
+    /// 문제 ID입니다.
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<f32>,
+    /// 현재 문제 풀이 상태입니다. 알려진 값은 다음이 있습니다. `\"solved\"`, `\"tried\"` 
+    #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
+    pub status: Option<String>,
 }
 
-impl InlineResponse200 {
-    pub fn new() -> InlineResponse200 {
-        InlineResponse200 {
-            user: None,
-            solved: None,
+impl InlineResponse200Solved {
+    pub fn new() -> InlineResponse200Solved {
+        InlineResponse200Solved {
+            id: None,
+            status: None,
         }
     }
 }
