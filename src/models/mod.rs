@@ -44,6 +44,8 @@ pub mod inline_response_200_8;
 pub use self::inline_response_200_8::InlineResponse2008;
 pub mod inline_response_200_9;
 pub use self::inline_response_200_9::InlineResponse2009;
+pub mod inline_response_200_solved;
+pub use self::inline_response_200_solved::InlineResponse200Solved;
 pub mod language;
 pub use self::language::Language;
 pub mod organization;
