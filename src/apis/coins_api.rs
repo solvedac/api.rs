@@ -15,30 +15,29 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
-/// struct for typed errors of method `get_user`
+/// struct for typed errors of method `get_coin_shop_products`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetUserError {
+pub enum GetCoinShopProductsError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method `get_user_problem_stats`
+/// struct for typed errors of method `get_coins_exchange_rate`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetUserProblemStatsError {
+pub enum GetCoinsExchangeRateError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// 사용자의 정보를 가져옵니다. 만약 로그인한 경우, 라이벌 여부도 가져옵니다.
-pub async fn get_user(configuration: &configuration::Configuration, handle: &str) -> Result<crate::models::FullUser, Error<GetUserError>> {
+/// 코인샵에서 팔고 있는 상품 목록을 가져옵니다. 
+pub async fn get_coin_shop_products(configuration: &configuration::Configuration, ) -> Result<Vec<crate::models::CoinshopProduct>, Error<GetCoinShopProductsError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/user/show", configuration.base_path);
+    let local_var_uri_str = format!("{}/coins/shop/list", configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -52,21 +51,20 @@ pub async fn get_user(configuration: &configuration::Configuration, handle: &str
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetUserError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetCoinShopProductsError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// 사용자가 푼 문제 개수를 문제 수준별로 가져옵니다.
-pub async fn get_user_problem_stats(configuration: &configuration::Configuration, handle: &str) -> Result<Vec<crate::models::InlineResponse20015>, Error<GetUserProblemStatsError>> {
+/// 현재 코인 → 별조각 환율을 가져옵니다. 
+pub async fn get_coins_exchange_rate(configuration: &configuration::Configuration, ) -> Result<crate::models::InlineResponse2001, Error<GetCoinsExchangeRateError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/user/problem_stats", configuration.base_path);
+    let local_var_uri_str = format!("{}/coins/exchange_rate", configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -80,7 +78,7 @@ pub async fn get_user_problem_stats(configuration: &configuration::Configuration
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetUserProblemStatsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetCoinsExchangeRateError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
