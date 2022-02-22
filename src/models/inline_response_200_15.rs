@@ -12,20 +12,36 @@
 
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct InlineResponse2003 {
+pub struct InlineResponse20015 {
     /// Unrated를 0, Bronze V를 1, ... Ruby II를 29, Ruby I을 30으로 표현하는 문제 레벨입니다. 자세한 값 정보는 표1. 수치 - 이름 표를 펼쳐 참고하십시오.  <details>   <summary>     표1. 수치 - 이름 표   </summary>    | 수치 | 이름         |   | ---: | ------------ |   |    0 | Unrated      |   |    1 | Bronze V     |   |    2 | Bronze IV    |   |    3 | Bronze III   |   |    4 | Bronze II    |   |    5 | Bronze I     |   |    6 | Silver V     |   |    7 | Silver IV    |   |    8 | Silver III   |   |    9 | Silver II    |   |   10 | Silver I     |   |   11 | Gold V       |   |   12 | Gold IV      |   |   13 | Gold III     |   |   14 | Gold II      |   |   15 | Gold I       |   |   16 | Platinum V   |   |   17 | Platinum IV  |   |   18 | Platinum III |   |   19 | Platinum II  |   |   20 | Platinum I   |   |   21 | Diamond V    |   |   22 | Diamond IV   |   |   23 | Diamond III  |   |   24 | Diamond II   |   |   25 | Diamond I    |   |   26 | Ruby V       |   |   27 | Ruby IV      |   |   28 | Ruby III     |   |   29 | Ruby II      |   |   30 | Ruby I       |  </details> 
     #[serde(rename = "level", skip_serializing_if = "Option::is_none")]
     pub level: Option<i64>,
-    /// 이 문제 수준인 문제 수입니다.
-    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
-    pub count: Option<i64>,
+    /// solved.ac에 등록된 해당 레벨의 문제 수입니다.
+    #[serde(rename = "total", skip_serializing_if = "Option::is_none")]
+    pub total: Option<i64>,
+    /// 사용자가 푼 문제 수입니다.
+    #[serde(rename = "solved", skip_serializing_if = "Option::is_none")]
+    pub solved: Option<i64>,
+    /// 사용자가 부분 성공한 문제 수입니다.
+    #[serde(rename = "partial", skip_serializing_if = "Option::is_none")]
+    pub partial: Option<i64>,
+    /// 사용자가 시도해본 문제 수입니다.
+    #[serde(rename = "tried", skip_serializing_if = "Option::is_none")]
+    pub tried: Option<i64>,
+    /// 사용자가 해당 레벨에서 획득한 경험치의 합입니다.
+    #[serde(rename = "exp", skip_serializing_if = "Option::is_none")]
+    pub exp: Option<i64>,
 }
 
-impl InlineResponse2003 {
-    pub fn new() -> InlineResponse2003 {
-        InlineResponse2003 {
+impl InlineResponse20015 {
+    pub fn new() -> InlineResponse20015 {
+        InlineResponse20015 {
             level: None,
-            count: None,
+            total: None,
+            solved: None,
+            partial: None,
+            tried: None,
+            exp: None,
         }
     }
 }
