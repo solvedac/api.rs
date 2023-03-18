@@ -20,13 +20,12 @@ pub struct FullUser {
     /// 사용자의 자기소개입니다.
     #[serde(rename = "bio")]
     pub bio: String,
-    /// 사용자가 속한 조직 목록입니다.
-    #[serde(rename = "organizations")]
-    pub organizations: Vec<crate::models::Organization>,
-    #[serde(rename = "badge", skip_serializing_if = "Option::is_none")]
-    pub badge: Option<Box<crate::models::Badge>>,
-    #[serde(rename = "background")]
-    pub background: Box<crate::models::UserBackground>,
+    /// 사용자가 지금 사용 중인 뱃지의 아이디입니다.
+    #[serde(rename = "badgeId", skip_serializing_if = "Option::is_none")]
+    pub badge_id: Option<String>,
+    /// 사용자가 지금 사용 중인 배경의 아이디입니다.
+    #[serde(rename = "backgroundId")]
+    pub background_id: String,
     /// 사용자의 프로필 사진으로 가는 하이퍼링크입니다.
     #[serde(rename = "profileImageUrl")]
     pub profile_image_url: Option<String>,
@@ -71,9 +70,24 @@ pub struct FullUser {
     /// 최대 연속 문제 풀이일 수입니다.
     #[serde(rename = "maxStreak")]
     pub max_streak: i64,
+    /// 사용자가 가지고 있는 코인의 수입니다.
+    #[serde(rename = "coins")]
+    pub coins: i64,
+    /// 사용자가 가지고 있는 별가루의 수입니다.
+    #[serde(rename = "stardusts")]
+    pub stardusts: i64,
+    /// 사용자가 가입한 날짜입니다.
+    #[serde(rename = "joinedAt")]
+    pub joined_at: String,
+    /// 사용자의 정지 종료 날짜입니다.
+    #[serde(rename = "bannedUntil")]
+    pub banned_until: String,
+    /// 사용자의 PRO 종료 날짜입니다.
+    #[serde(rename = "proUntil")]
+    pub pro_until: String,
     /// 사용자의 순위입니다.
-    #[serde(rename = "rank", skip_serializing_if = "Option::is_none")]
-    pub rank: Option<i64>,
+    #[serde(rename = "rank")]
+    pub rank: i64,
     /// 라이벌 여부입니다.
     #[serde(rename = "isRival", skip_serializing_if = "Option::is_none")]
     pub is_rival: Option<bool>,
@@ -84,13 +98,12 @@ pub struct FullUser {
 
 impl FullUser {
     /// 사용자 정보입니다. 
-    pub fn new(handle: String, bio: String, organizations: Vec<crate::models::Organization>, background: crate::models::UserBackground, profile_image_url: Option<String>, solved_count: i64, vote_count: i64, exp: i64, tier: i64, rating: i64, rating_by_problems_sum: i64, rating_by_class: i64, rating_by_solved_count: i64, rating_by_vote_count: i64, class: i64, class_decoration: crate::models::ClassDecoration, rival_count: i64, reverse_rival_count: i64, max_streak: i64) -> FullUser {
+    pub fn new(handle: String, bio: String, background_id: String, profile_image_url: Option<String>, solved_count: i64, vote_count: i64, exp: i64, tier: i64, rating: i64, rating_by_problems_sum: i64, rating_by_class: i64, rating_by_solved_count: i64, rating_by_vote_count: i64, class: i64, class_decoration: crate::models::ClassDecoration, rival_count: i64, reverse_rival_count: i64, max_streak: i64, coins: i64, stardusts: i64, joined_at: String, banned_until: String, pro_until: String, rank: i64) -> FullUser {
         FullUser {
             handle,
             bio,
-            organizations,
-            badge: None,
-            background: Box::new(background),
+            badge_id: None,
+            background_id,
             profile_image_url,
             solved_count,
             vote_count,
@@ -106,7 +119,12 @@ impl FullUser {
             rival_count,
             reverse_rival_count,
             max_streak,
-            rank: None,
+            coins,
+            stardusts,
+            joined_at,
+            banned_until,
+            pro_until,
+            rank,
             is_rival: None,
             is_reverse_rival: None,
         }

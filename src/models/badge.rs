@@ -26,6 +26,10 @@ pub struct Badge {
     /// 뱃지의 설명입니다.
     #[serde(rename = "displayDescription")]
     pub display_description: String,
+    #[serde(rename = "badgeTier", skip_serializing_if = "Option::is_none")]
+    pub badge_tier: Option<crate::models::BadgeTier>,
+    #[serde(rename = "badgeCategory", skip_serializing_if = "Option::is_none")]
+    pub badge_category: Option<crate::models::BadgeCategory>,
 }
 
 impl Badge {
@@ -36,6 +40,8 @@ impl Badge {
             badge_image_url,
             display_name,
             display_description,
+            badge_tier: None,
+            badge_category: None,
         }
     }
 }
