@@ -19,8 +19,11 @@ pub struct InlineResponse2002 {
     #[serde(rename = "total", skip_serializing_if = "Option::is_none")]
     pub total: Option<i64>,
     /// 이 CLASS에 속한 에센셜 문제 수입니다.
-    #[serde(rename = "essential", skip_serializing_if = "Option::is_none")]
-    pub essential: Option<i32>,
+    #[serde(rename = "essentials", skip_serializing_if = "Option::is_none")]
+    pub essentials: Option<i32>,
+    /// 이 CLASS를 취득하기 위한 최소 문제 수입니다.
+    #[serde(rename = "criteria", skip_serializing_if = "Option::is_none")]
+    pub criteria: Option<i32>,
 }
 
 impl InlineResponse2002 {
@@ -28,7 +31,8 @@ impl InlineResponse2002 {
         InlineResponse2002 {
             class: None,
             total: None,
-            essential: None,
+            essentials: None,
+            criteria: None,
         }
     }
 }
