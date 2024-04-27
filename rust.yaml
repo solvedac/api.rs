@@ -1,4 +1,4 @@
-inputSpec: "unofficial-documentation/src/openapi.yaml"
+inputSpec: "tsp-output/@typespec/openapi3/openapi.yaml"
 generatorName: "rust"
 outputDir: "generated"
 validateSpec: false
