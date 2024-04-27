@@ -16,7 +16,7 @@ jobs:
         with:
           name: github-pages
           repository: solvedac/unofficial-documentation
-          run-id:
+          run-id: ${{ github.event.inputs.run-id }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
