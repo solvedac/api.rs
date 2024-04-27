@@ -1,6 +1,6 @@
 [package]
 name = "solvedac_api"
-version = "3.2022.2+b1"
+version = ""
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

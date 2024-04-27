@@ -9,44 +9,33 @@
  */
 
 
-use reqwest;
 
-#[derive(Debug, Clone)]
-pub struct Configuration {
-    pub base_path: String,
-    pub user_agent: Option<String>,
-    pub client: reqwest::Client,
-    pub basic_auth: Option<BasicAuth>,
-    pub oauth_access_token: Option<String>,
-    pub bearer_access_token: Option<String>,
-    pub api_key: Option<ApiKey>,
-    // TODO: take an oauth2 token source, similar to the go one
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct VerifyCredentialsEmoticonUnlockStatus {
+    /// 해금 여부입니다.
+    #[serde(rename = "unlocked")]
+    pub unlocked: bool,
+    /// 고유 식별자입니다.
+    #[serde(rename = "emoticonId")]
+    pub emoticon_id: String,
+    /// 사진으로 가는 하이퍼링크입니다.
+    #[serde(rename = "emoticonUrl")]
+    pub emoticon_url: String,
+    /// 한국어 이름입니다.
+    #[serde(rename = "displayName")]
+    pub display_name: String,
 }
 
-pub type BasicAuth = (String, Option<String>);
-
-#[derive(Debug, Clone)]
-pub struct ApiKey {
-    pub prefix: Option<String>,
-    pub key: String,
-}
-
-impl Configuration {
-    pub fn new() -> Configuration {
-        Configuration::default()
-    }
-}
-
-impl Default for Configuration {
-    fn default() -> Self {
-        Configuration {
-            base_path: "https://solved.ac/api/v3".to_owned(),
-            user_agent: Some("OpenAPI-Generator/3ce78c7/rust".to_owned()),
-            client: reqwest::Client::new(),
-            basic_auth: None,
-            oauth_access_token: None,
-            bearer_access_token: None,
-            api_key: None,
+impl VerifyCredentialsEmoticonUnlockStatus {
+    pub fn new(unlocked: bool, emoticon_id: String, emoticon_url: String, display_name: String) -> VerifyCredentialsEmoticonUnlockStatus {
+        VerifyCredentialsEmoticonUnlockStatus {
+            unlocked,
+            emoticon_id,
+            emoticon_url,
+            display_name,
         }
     }
 }
+
+
