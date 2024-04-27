@@ -15,10 +15,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: github-pages
+          path: unofficial-documentation
           repository: solvedac/unofficial-documentation
           github-token: ${{ secrets.PAT_FOLLOW_UP }}
           run-id: ${{ github.event.inputs.run-id }}
-      - run: tar -xf artifact.tar ./tsp-output/@typespec/openapi3/openapi.yaml
+      - run: tar -xf unofficial-documentation/artifact.tar ./tsp-output/@typespec/openapi3/openapi.yaml
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
