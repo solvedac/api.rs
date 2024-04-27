@@ -9,44 +9,29 @@
  */
 
 
-use reqwest;
 
-#[derive(Debug, Clone)]
-pub struct Configuration {
-    pub base_path: String,
-    pub user_agent: Option<String>,
-    pub client: reqwest::Client,
-    pub basic_auth: Option<BasicAuth>,
-    pub oauth_access_token: Option<String>,
-    pub bearer_access_token: Option<String>,
-    pub api_key: Option<ApiKey>,
-    // TODO: take an oauth2 token source, similar to the go one
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ProblemTagNameTranslated {
+    /// 태그 이름이 작성된 언어입니다.
+    #[serde(rename = "language")]
+    pub language: Box<crate::models::Language>,
+    /// 이름입니다.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// 짧은 이름입니다. 따로 없을 경우 `name`과 같은 값입니다.
+    #[serde(rename = "short")]
+    pub short: String,
 }
 
-pub type BasicAuth = (String, Option<String>);
-
-#[derive(Debug, Clone)]
-pub struct ApiKey {
-    pub prefix: Option<String>,
-    pub key: String,
-}
-
-impl Configuration {
-    pub fn new() -> Configuration {
-        Configuration::default()
-    }
-}
-
-impl Default for Configuration {
-    fn default() -> Self {
-        Configuration {
-            base_path: "https://solved.ac/api/v3".to_owned(),
-            user_agent: Some("OpenAPI-Generator/3ce78c7/rust".to_owned()),
-            client: reqwest::Client::new(),
-            basic_auth: None,
-            oauth_access_token: None,
-            bearer_access_token: None,
-            api_key: None,
+impl ProblemTagNameTranslated {
+    pub fn new(language: crate::models::Language, name: String, short: String) -> ProblemTagNameTranslated {
+        ProblemTagNameTranslated {
+            language: Box::new(language),
+            name,
+            short,
         }
     }
 }
+
+
