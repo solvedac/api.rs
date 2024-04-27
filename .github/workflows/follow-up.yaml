@@ -31,7 +31,10 @@ jobs:
         run: npx @openapitools/openapi-generator-cli batch --clean rust.yaml
       - name: Update Version
         run: |
-          sed -ri ":a;N;\$!ba;s/\"solvedac_api\"\nversion = \"[^\"]+\"/\"solvedac_api\"\nversion = \"`sed -rn 's/^.*  version: ([^\n]+).*$/\1/p' unofficial-documentation/tsp-output/@typespec/openapi3/openapi.yaml | sed -rn 's/\.0+([0-9]+)/.\1/p'`\"/" Cargo.toml
+          file=unofficial-documentation/tsp-output/@typespec/openapi3/openapi.yaml;
+          version=$(sed -rn 's/^.*version: *([^\n]+).*$/\1/p' $file | sed -rn 's/\.0+([0-9]+)/.\1/p');
+          echo New Version: $version
+          sed -ri ":a;N;\$!ba;s/\"solvedac_api\"\nversion = \"[^\"]+\"/\"solvedac_api\"\nversion = \"$version\"/" Cargo.toml;
       - name: Move Generated Files
         run: |
           rm -rf src;
