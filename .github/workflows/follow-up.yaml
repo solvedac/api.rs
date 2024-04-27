@@ -16,7 +16,7 @@ jobs:
         with:
           name: github-pages
           repository: solvedac/unofficial-documentation
-          github-token: ${{ github.action.secrets.PAT_FOLLOW_UP }}
+          github-token: ${{ secrets.PAT_FOLLOW_UP }}
           run-id: ${{ github.event.inputs.run-id }}
       - uses: actions/setup-java@v4
         with:
