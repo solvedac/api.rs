@@ -6,7 +6,7 @@ on:
       run-id:
         description: docs page GHA run id
         required: true
-        type: number
+        type: string
 jobs:
   follow-up:
     runs-on: ubuntu-latest
