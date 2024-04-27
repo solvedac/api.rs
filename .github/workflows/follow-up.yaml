@@ -32,8 +32,7 @@ jobs:
       - name: Update Version
         run: |
           file=unofficial-documentation/tsp-output/@typespec/openapi3/openapi.yaml;
-          cat file | head -n10;
-          version=$(sed -rn 's/^.*version: *([^\n]+).*$/\1/p' $file | sed -rn 's/\.0+([0-9]+)/.\1/p');
+          version=$(sed -rn 's/\s+version:\s*"([^"]+)"/\1/p' $file | sed -rn 's/\.0+([0-9]+)/.\1/p');
           echo New Version: $version;
           sed -ri ":a;N;\$!ba;s/\"solvedac_api\"\nversion = \"[^\"]+\"/\"solvedac_api\"\nversion = \"$version\"/" Cargo.toml;
       - name: Move Generated Files
