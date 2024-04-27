@@ -21,6 +21,7 @@ jobs:
           run-id: ${{ github.event.inputs.run-id }}
       - run: tar -xf artifact.tar ./tsp-output/@typespec/openapi3/openapi.yaml
         working-directory: unofficial-documentation
+      - run: ls -R
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
