@@ -9,44 +9,21 @@
  */
 
 
-use reqwest;
 
-#[derive(Debug, Clone)]
-pub struct Configuration {
-    pub base_path: String,
-    pub user_agent: Option<String>,
-    pub client: reqwest::Client,
-    pub basic_auth: Option<BasicAuth>,
-    pub oauth_access_token: Option<String>,
-    pub bearer_access_token: Option<String>,
-    pub api_key: Option<ApiKey>,
-    // TODO: take an oauth2 token source, similar to the go one
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct GetCoinStardustExchangeRateExchangeRate {
+    /// 1 코인을 별조각으로 바꾸는 환율입니다. 별조각을 코인으로 환전할 때에는 수수료가 1%(소수점은 내림) 붙습니다.
+    #[serde(rename = "rate")]
+    pub rate: i32,
 }
 
-pub type BasicAuth = (String, Option<String>);
-
-#[derive(Debug, Clone)]
-pub struct ApiKey {
-    pub prefix: Option<String>,
-    pub key: String,
-}
-
-impl Configuration {
-    pub fn new() -> Configuration {
-        Configuration::default()
-    }
-}
-
-impl Default for Configuration {
-    fn default() -> Self {
-        Configuration {
-            base_path: "https://solved.ac/api/v3".to_owned(),
-            user_agent: Some("OpenAPI-Generator/3ce78c7/rust".to_owned()),
-            client: reqwest::Client::new(),
-            basic_auth: None,
-            oauth_access_token: None,
-            bearer_access_token: None,
-            api_key: None,
+impl GetCoinStardustExchangeRateExchangeRate {
+    pub fn new(rate: i32) -> GetCoinStardustExchangeRateExchangeRate {
+        GetCoinStardustExchangeRateExchangeRate {
+            rate,
         }
     }
 }
+
+

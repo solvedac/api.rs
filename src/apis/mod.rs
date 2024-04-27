@@ -65,7 +65,6 @@ pub mod account_api;
 pub mod background_api;
 pub mod badge_api;
 pub mod coins_api;
-pub mod default_api;
 pub mod other_api;
 pub mod problem_api;
 pub mod ranking_api;
