@@ -18,6 +18,7 @@ jobs:
           repository: solvedac/unofficial-documentation
           github-token: ${{ secrets.PAT_FOLLOW_UP }}
           run-id: ${{ github.event.inputs.run-id }}
+      - run: ls -R
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
