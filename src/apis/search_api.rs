@@ -112,7 +112,7 @@ pub async fn search_problem(configuration: &configuration::Configuration, query:
 }
 
 /// 주어진 쿼리에 따라 문제 태그를 검색합니다.
-pub async fn search_problem_tag(configuration: &configuration::Configuration, query: &str, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2003, Error<SearchProblemTagError>> {
+pub async fn search_problem_tag(configuration: &configuration::Configuration, query: &str, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2004, Error<SearchProblemTagError>> {
 
     let local_var_client = &configuration.client;
 
@@ -146,7 +146,7 @@ pub async fn search_problem_tag(configuration: &configuration::Configuration, qu
 }
 
 /// 주어진 쿼리에 따라 사용자를 검색합니다.
-pub async fn search_user(configuration: &configuration::Configuration, query: &str, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2004, Error<SearchUserError>> {
+pub async fn search_user(configuration: &configuration::Configuration, query: &str, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<SearchUserError>> {
 
     let local_var_client = &configuration.client;
 
