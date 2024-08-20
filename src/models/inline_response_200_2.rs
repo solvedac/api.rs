@@ -19,12 +19,12 @@ pub struct InlineResponse2002 {
     pub count: i32,
     /// 현재 페이지의 원소 목록입니다.
     #[serde(rename = "items")]
-    pub items: Vec<crate::models::InlineResponse2002Items>,
+    pub items: Vec<crate::models::RivalUser>,
 }
 
 impl InlineResponse2002 {
     /// 페이지네이션 가능한 쿼리의 응답 결과입니다.
-    pub fn new(count: i32, items: Vec<crate::models::InlineResponse2002Items>) -> InlineResponse2002 {
+    pub fn new(count: i32, items: Vec<crate::models::RivalUser>) -> InlineResponse2002 {
         InlineResponse2002 {
             count,
             items,

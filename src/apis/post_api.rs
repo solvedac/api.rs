@@ -15,29 +15,23 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
-/// struct for typed errors of method `get_coin_shop_products`
+/// struct for typed errors of method `get_post_by_id`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetCoinShopProductsError {
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method `get_coin_stardust_exchange_rate`
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum GetCoinStardustExchangeRateError {
+pub enum GetPostByIdError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// 코인샵에서 팔고 있는 상품 목록을 가져옵니다.
-pub async fn get_coin_shop_products(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>) -> Result<Vec<crate::models::CoinShopProduct>, Error<GetCoinShopProductsError>> {
+/// 해당 제목의 게시글을 가져옵니다.
+pub async fn get_post_by_id(configuration: &configuration::Configuration, post_id: &str, x_solvedac_language: Option<crate::models::Language>) -> Result<crate::models::Post, Error<GetPostByIdError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/coins/shop/list", configuration.base_path);
+    let local_var_uri_str = format!("{}/post/show", configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    local_var_req_builder = local_var_req_builder.query(&[("postId", &post_id.to_string())]);
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -54,34 +48,7 @@ pub async fn get_coin_shop_products(configuration: &configuration::Configuration
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetCoinShopProductsError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
-        Err(Error::ResponseError(local_var_error))
-    }
-}
-
-/// 코인 → 별조각 환율을 가져옵니다.
-pub async fn get_coin_stardust_exchange_rate(configuration: &configuration::Configuration, ) -> Result<crate::models::GetCoinStardustExchangeRateExchangeRate, Error<GetCoinStardustExchangeRateError>> {
-
-    let local_var_client = &configuration.client;
-
-    let local_var_uri_str = format!("{}/coins/exchange_rate", configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_user_agent) = configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<GetCoinStardustExchangeRateError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetPostByIdError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

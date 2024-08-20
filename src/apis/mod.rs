@@ -65,10 +65,13 @@ pub mod account_api;
 pub mod background_api;
 pub mod badge_api;
 pub mod coins_api;
+pub mod organization_api;
 pub mod other_api;
+pub mod post_api;
 pub mod problem_api;
 pub mod ranking_api;
 pub mod search_api;
+pub mod tag_api;
 pub mod user_api;
 
 pub mod configuration;

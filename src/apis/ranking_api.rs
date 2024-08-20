@@ -22,6 +22,20 @@ pub enum GetOrganizationRankingByAcRatingError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method `get_ranking_by_ac_rating_in_organization`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetRankingByAcRatingInOrganizationError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method `get_ranking_by_arena_rating_in_organization`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetRankingByArenaRatingInOrganizationError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `get_ranking_by_class`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -68,7 +82,7 @@ pub enum GetRivalRankingByAcRatingError {
 
 
 /// 역라이벌인 사용자 중에서 문제풀이 레이팅이 높은 단체가 먼저 오도록 정렬한 목록을 가져옵니다.
-pub async fn get_organization_ranking_by_ac_rating(configuration: &configuration::Configuration, _type: Option<crate::models::OrganizationType>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetOrganizationRankingByAcRatingError>> {
+pub async fn get_organization_ranking_by_ac_rating(configuration: &configuration::Configuration, _type: Option<crate::models::OrganizationType>, page: Option<i32>) -> Result<crate::models::InlineResponse2003, Error<GetOrganizationRankingByAcRatingError>> {
 
     let local_var_client = &configuration.client;
 
@@ -100,8 +114,70 @@ pub async fn get_organization_ranking_by_ac_rating(configuration: &configuration
     }
 }
 
+/// 해당 단체에 속한 사용자 중에서 문제풀이 레이팅이 높은 사용자가 먼저 오도록 정렬한 목록을 가져옵니다.
+pub async fn get_ranking_by_ac_rating_in_organization(configuration: &configuration::Configuration, organization_id: i32, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingByAcRatingInOrganizationError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/ranking/in_organization", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("organizationId", &organization_id.to_string())]);
+    if let Some(ref local_var_str) = page {
+        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetRankingByAcRatingInOrganizationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// 해당 단체에 속한 사용자 중에서 아레나 레이팅이 높은 사용자가 먼저 오도록 정렬한 목록을 가져옵니다.
+pub async fn get_ranking_by_arena_rating_in_organization(configuration: &configuration::Configuration, organization_id: i32, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingByArenaRatingInOrganizationError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/ranking/arena_in_organization", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("organizationId", &organization_id.to_string())]);
+    if let Some(ref local_var_str) = page {
+        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetRankingByArenaRatingInOrganizationError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
 /// CLASS가 높은 사용자가 먼저 오도록 정렬한 사용자 목록을 가져옵니다.
-pub async fn get_ranking_by_class(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingByClassError>> {
+pub async fn get_ranking_by_class(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetRankingByClassError>> {
 
     let local_var_client = &configuration.client;
 
@@ -134,7 +210,7 @@ pub async fn get_ranking_by_class(configuration: &configuration::Configuration, 
 }
 
 /// 기여 횟수가 높은 사용자가 먼저 오도록 정렬한 사용자 목록을 가져옵니다.
-pub async fn get_ranking_by_contribution(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingByContributionError>> {
+pub async fn get_ranking_by_contribution(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetRankingByContributionError>> {
 
     let local_var_client = &configuration.client;
 
@@ -167,7 +243,7 @@ pub async fn get_ranking_by_contribution(configuration: &configuration::Configur
 }
 
 /// 치장 스트릭 유지일이 높은 사용자가 먼저 오도록 정렬한 사용자 목록을 가져옵니다.
-pub async fn get_ranking_by_max_streak(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingByMaxStreakError>> {
+pub async fn get_ranking_by_max_streak(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetRankingByMaxStreakError>> {
 
     let local_var_client = &configuration.client;
 
@@ -200,7 +276,7 @@ pub async fn get_ranking_by_max_streak(configuration: &configuration::Configurat
 }
 
 /// 문제풀이 레이팅이 높은 사용자가 먼저 오도록 정렬한 사용자 목록을 가져옵니다.
-pub async fn get_ranking_by_solve_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRankingBySolveAcRatingError>> {
+pub async fn get_ranking_by_solve_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetRankingBySolveAcRatingError>> {
 
     let local_var_client = &configuration.client;
 
@@ -233,7 +309,7 @@ pub async fn get_ranking_by_solve_ac_rating(configuration: &configuration::Confi
 }
 
 /// 역라이벌인 사용자 중에서 문제풀이 레이팅이 높은 사용자가 먼저 오도록 정렬한 목록을 가져옵니다.
-pub async fn get_reverse_rival_ranking_by_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetReverseRivalRankingByAcRatingError>> {
+pub async fn get_reverse_rival_ranking_by_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetReverseRivalRankingByAcRatingError>> {
 
     let local_var_client = &configuration.client;
 
@@ -266,7 +342,7 @@ pub async fn get_reverse_rival_ranking_by_ac_rating(configuration: &configuratio
 }
 
 /// 라이벌인 사용자 중에서 문제풀이 레이팅이 높은 사용자가 먼저 오도록 정렬한 목록을 가져옵니다.
-pub async fn get_rival_ranking_by_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2001, Error<GetRivalRankingByAcRatingError>> {
+pub async fn get_rival_ranking_by_ac_rating(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>, page: Option<i32>) -> Result<crate::models::InlineResponse2002, Error<GetRivalRankingByAcRatingError>> {
 
     let local_var_client = &configuration.client;
 

@@ -15,10 +15,31 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
+/// struct for typed errors of method `get_user_additional_info`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetUserAdditionalInfoError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `get_user_by_handle`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserByHandleError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method `get_user_class_stats`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetUserClassStatsError {
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method `get_user_contribution_stats`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetUserContributionStatsError {
     UnknownValue(serde_json::Value),
 }
 
@@ -36,6 +57,13 @@ pub enum GetUserProblemStatsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method `get_user_problem_tag_stats`
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum GetUserProblemTagStatsError {
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method `get_user_top100`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -43,6 +71,34 @@ pub enum GetUserTop100Error {
     UnknownValue(serde_json::Value),
 }
 
+
+/// 해당 핸들을 가진 사용자의 부가 정보를 가져옵니다.
+pub async fn get_user_additional_info(configuration: &configuration::Configuration, handle: &str) -> Result<crate::models::UserAdditionalInfo, Error<GetUserAdditionalInfoError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/user/additional_info", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetUserAdditionalInfoError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
 
 /// 해당 핸들의 사용자 정보를 가져옵니다. 만약 요청자가 로그인 중이라면 라이벌 여부도 가져옵니다. 로그인 중이 아니라면 라이벌 등 로그인해야 알 수 있는 정보는 기본값 처리됩니다.
 pub async fn get_user_by_handle(configuration: &configuration::Configuration, handle: &str, x_solvedac_language: Option<crate::models::Language>) -> Result<crate::models::SocialUser, Error<GetUserByHandleError>> {
@@ -70,6 +126,62 @@ pub async fn get_user_by_handle(configuration: &configuration::Configuration, ha
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<GetUserByHandleError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// 해당 핸들의 사용자가 푼 문제 수를 클래스별로 나누어 가져옵니다.
+pub async fn get_user_class_stats(configuration: &configuration::Configuration, handle: &str) -> Result<Vec<crate::models::GetUserClassStatsClassStat>, Error<GetUserClassStatsError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/user/class_stats", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetUserClassStatsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// 해당 핸들의 사용자가 기여한 문제 수를 문제 수준별로 나누어 가져옵니다.
+pub async fn get_user_contribution_stats(configuration: &configuration::Configuration, handle: &str) -> Result<Vec<crate::models::GetUserContributionStatsContributionStat>, Error<GetUserContributionStatsError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/user/contribution_stats", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetUserContributionStatsError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
@@ -126,6 +238,34 @@ pub async fn get_user_problem_stats(configuration: &configuration::Configuration
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
         let local_var_entity: Option<GetUserProblemStatsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        Err(Error::ResponseError(local_var_error))
+    }
+}
+
+/// 해당 핸들의 사용자가 푼 문제 수를 태그별로 나누어 가져옵니다.
+pub async fn get_user_problem_tag_stats(configuration: &configuration::Configuration, handle: &str) -> Result<crate::models::InlineResponse2005, Error<GetUserProblemTagStatsError>> {
+
+    let local_var_client = &configuration.client;
+
+    let local_var_uri_str = format!("{}/user/problem_tag_stats", configuration.base_path);
+    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+
+    local_var_req_builder = local_var_req_builder.query(&[("handle", &handle.to_string())]);
+    if let Some(ref local_var_user_agent) = configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    }
+
+    let local_var_req = local_var_req_builder.build()?;
+    let local_var_resp = local_var_client.execute(local_var_req).await?;
+
+    let local_var_status = local_var_resp.status();
+    let local_var_content = local_var_resp.text().await?;
+
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
+        serde_json::from_str(&local_var_content).map_err(Error::from)
+    } else {
+        let local_var_entity: Option<GetUserProblemTagStatsError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }

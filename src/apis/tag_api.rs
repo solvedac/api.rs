@@ -15,34 +15,32 @@ use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
 
-/// struct for typed errors of method `get_coin_shop_products`
+/// struct for typed errors of method `get_tag_by_key`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetCoinShopProductsError {
+pub enum GetTagByKeyError {
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method `get_coin_stardust_exchange_rate`
+/// struct for typed errors of method `get_tag_list`
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetCoinStardustExchangeRateError {
+pub enum GetTagListError {
     UnknownValue(serde_json::Value),
 }
 
 
-/// 코인샵에서 팔고 있는 상품 목록을 가져옵니다.
-pub async fn get_coin_shop_products(configuration: &configuration::Configuration, x_solvedac_language: Option<crate::models::Language>) -> Result<Vec<crate::models::CoinShopProduct>, Error<GetCoinShopProductsError>> {
+/// 태그 ID로 태그 정보를 가져옵니다.
+pub async fn get_tag_by_key(configuration: &configuration::Configuration, key: &str) -> Result<crate::models::ProblemTag, Error<GetTagByKeyError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/coins/shop/list", configuration.base_path);
+    let local_var_uri_str = format!("{}/tag/show", configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    local_var_req_builder = local_var_req_builder.query(&[("key", &key.to_string())]);
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-    if let Some(local_var_param_value) = x_solvedac_language {
-        local_var_req_builder = local_var_req_builder.header("x-solvedac-language", local_var_param_value.to_string());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -54,20 +52,23 @@ pub async fn get_coin_shop_products(configuration: &configuration::Configuration
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetCoinShopProductsError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetTagByKeyError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// 코인 → 별조각 환율을 가져옵니다.
-pub async fn get_coin_stardust_exchange_rate(configuration: &configuration::Configuration, ) -> Result<crate::models::GetCoinStardustExchangeRateExchangeRate, Error<GetCoinStardustExchangeRateError>> {
+/// 태그 목록을 가져옵니다.
+pub async fn get_tag_list(configuration: &configuration::Configuration, page: Option<i32>) -> Result<crate::models::InlineResponse2004, Error<GetTagListError>> {
 
     let local_var_client = &configuration.client;
 
-    let local_var_uri_str = format!("{}/coins/exchange_rate", configuration.base_path);
+    let local_var_uri_str = format!("{}/tag/list", configuration.base_path);
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
+    if let Some(ref local_var_str) = page {
+        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -81,7 +82,7 @@ pub async fn get_coin_stardust_exchange_rate(configuration: &configuration::Conf
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<GetCoinStardustExchangeRateError> = serde_json::from_str(&local_var_content).ok();
+        let local_var_entity: Option<GetTagListError> = serde_json::from_str(&local_var_content).ok();
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
         Err(Error::ResponseError(local_var_error))
     }
